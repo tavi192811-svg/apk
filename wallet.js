@@ -342,7 +342,7 @@ window.addEventListener('userReady', async (e) => {
 // MY BONUSES SYSTEM
 // ══════════════════════════════════════════════════
 
-const RAILWAY_BONUS_URL = 'https://vivacious-dream-production-ade7.up.railway.app';
+const RAILWAY_BONUS_URL = 'https://myserver-production-d47c.up.railway.app';
 
 document.getElementById('btn-my-bonuses')?.addEventListener('click', async () => {
   const user = window.cashTreasureUser;

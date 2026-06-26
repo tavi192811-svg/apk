@@ -21,7 +21,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 // ── 2. Configuration ──
-const RAILWAY_URL = 'https://vivacious-dream-production-ade7.up.railway.app';
+const RAILWAY_URL = 'https://myserver-production-d47c.up.railway.app';
 let currentTimer = null;
 let currentPackageData = null;
 let appliedPaidCoupon = null; // Stores validated coupon for paid orders

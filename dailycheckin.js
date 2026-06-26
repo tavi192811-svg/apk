@@ -355,7 +355,7 @@ window.onDailyCheckinRewarded = async function () {
   try {
     let result;
     try {
-      const resp = await fetch('https://vivacious-dream-production-ade7.up.railway.app/daily-checkin', {
+      const resp = await fetch('https://myserver-production-d47c.up.railway.app/daily-checkin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId: user.uid })

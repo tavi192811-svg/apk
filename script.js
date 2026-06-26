@@ -923,7 +923,7 @@ window.onAdRewarded = async function () {
 
   if (window.pendingRewardType === "watch_ad") {
     try {
-      const resp = await fetch('https://vivacious-dream-production-ade7.up.railway.app/watch-ad-reward', {
+      const resp = await fetch('https://myserver-production-d47c.up.railway.app/watch-ad-reward', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId: user.uid })
@@ -1148,7 +1148,7 @@ function showWelcomeDiamondOverlay(uid) {
     const wbtn = document.getElementById("welcome-diamond-btn");
     wbtn.disabled = true;
     try {
-      const resp = await fetch('https://vivacious-dream-production-ade7.up.railway.app/diamond-welcome', {
+      const resp = await fetch('https://myserver-production-d47c.up.railway.app/diamond-welcome', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId: uid })
@@ -1273,7 +1273,7 @@ function renderInstagramConnectState() {
 
   const picEl = document.getElementById('ig-profile-pic');
   if (picEl) {
-    const RW = 'https://vivacious-dream-production-ade7.up.railway.app';
+    const RW = 'https://myserver-production-d47c.up.railway.app';
     if (data.profilePicBase64 && data.profilePicBase64.startsWith('data:')) {
       picEl.src = data.profilePicBase64;
     } else if (data.profilePic) {
@@ -1378,7 +1378,7 @@ function showInstagramConnectModal() {
     btn.textContent = '⏳ Searching...';
 
     try {
-      const resp = await fetch('https://vivacious-dream-production-ade7.up.railway.app/instagram-lookup', {
+      const resp = await fetch('https://myserver-production-d47c.up.railway.app/instagram-lookup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username })

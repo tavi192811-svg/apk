@@ -796,7 +796,7 @@ export async function initLevelSystem(uid) {
       // Award diamond when reaching Level 3 (Shark) — server-controlled
       if (evalResult.newLevel >= 3 && evalResult.oldLevel < 3) {
         try {
-          const resp = await fetch('https://vivacious-dream-production-ade7.up.railway.app/diamond-shark', {
+          const resp = await fetch('https://myserver-production-d47c.up.railway.app/diamond-shark', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ userId: uid })

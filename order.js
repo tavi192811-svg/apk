@@ -248,7 +248,7 @@ document.getElementById("confirm-order-btn")?.addEventListener("click", async ()
 // Handle Diamond Orders — fully server-controlled
 if (selectedOrder.isDiamondOrder) {
   try {
-    const resp = await fetch('https://vivacious-dream-production-ade7.up.railway.app/diamond-order', {
+    const resp = await fetch('https://myserver-production-d47c.up.railway.app/diamond-order', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -292,7 +292,7 @@ if (selectedOrder.isDiamondOrder) {
   const orderSnapshot = { ...selectedOrder };
 
   try {
-    const resp = await fetch('https://vivacious-dream-production-ade7.up.railway.app/create-credit-order', {
+    const resp = await fetch('https://myserver-production-d47c.up.railway.app/create-credit-order', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -523,7 +523,7 @@ window.startCountdown = startCountdown;
 // COUPON SYSTEM — Credit Orders
 // ══════════════════════════════════════════════════
 
-const RAILWAY_URL = 'https://vivacious-dream-production-ade7.up.railway.app';
+const RAILWAY_URL = 'https://myserver-production-d47c.up.railway.app';
 window._appliedCreditCoupon = null;
 
 function resetCreditCoupon() {
@@ -878,7 +878,7 @@ window.openRefilOverlay = async function(i) {
   const user = window.cashTreasureUser;
   if (user) {
     try {
-      const res = await fetch('https://vivacious-dream-production-ade7.up.railway.app/check-refil-cooldown', {
+      const res = await fetch('https://myserver-production-d47c.up.railway.app/check-refil-cooldown', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId: user.uid, orderId: currentRefilOrder.id })
@@ -985,7 +985,7 @@ window.submitRefilRequest = async function() {
 
     // ── Step 2: Send URL (not base64) to Railway ──
     const note = document.getElementById('refil-user-note')?.value?.trim() || '';
-    const res = await fetch('https://vivacious-dream-production-ade7.up.railway.app/submit-refil', {
+    const res = await fetch('https://myserver-production-d47c.up.railway.app/submit-refil', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
