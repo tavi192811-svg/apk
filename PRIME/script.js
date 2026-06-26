@@ -1141,7 +1141,7 @@ async function fetchGeminiResponse(messages) {
   }
 
 const response = await fetch(
-  'https://vivacious-dream-production-ade7.up.railway.app/chat',
+  'https://myserver-production-d47c.up.railway.app/chat',
   {
     method: 'POST',
     headers: {

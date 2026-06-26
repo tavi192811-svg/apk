@@ -1,0 +1,387 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>No Internet Connection</title>
+
+<style>
+/* =========================
+   RESET
+========================= */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,
+body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background:#FFFFFF;
+    font-family: Inter, Arial, Helvetica, sans-serif;
+}
+
+/* =========================
+   PAGE FADE IN
+========================= */
+body{
+    animation:fadeIn .9s ease;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(15px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* =========================
+   BACKGROUND PARTICLES
+========================= */
+.particles{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+    z-index:0;
+}
+
+.particle{
+    position:absolute;
+    border-radius:50%;
+    background:rgba(255,0,128,.08);
+    animation:floatParticle linear infinite;
+}
+
+.particle:nth-child(1){
+    width:10px;
+    height:10px;
+    left:10%;
+    animation-duration:12s;
+    animation-delay:-2s;
+}
+
+.particle:nth-child(2){
+    width:18px;
+    height:18px;
+    left:25%;
+    animation-duration:18s;
+    animation-delay:-4s;
+}
+
+.particle:nth-child(3){
+    width:12px;
+    height:12px;
+    left:40%;
+    animation-duration:15s;
+}
+
+.particle:nth-child(4){
+    width:22px;
+    height:22px;
+    left:60%;
+    animation-duration:20s;
+}
+
+.particle:nth-child(5){
+    width:14px;
+    height:14px;
+    left:75%;
+    animation-duration:16s;
+}
+
+.particle:nth-child(6){
+    width:20px;
+    height:20px;
+    left:90%;
+    animation-duration:22s;
+}
+
+@keyframes floatParticle{
+    from{
+        transform:translateY(100vh);
+        opacity:0;
+    }
+    15%{
+        opacity:1;
+    }
+    85%{
+        opacity:1;
+    }
+    to{
+        transform:translateY(-120px);
+        opacity:0;
+    }
+}
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+main{
+    position:relative;
+    z-index:2;
+    width:100%;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:24px;
+}
+
+.content{
+    width:100%;
+    max-width:420px;
+    text-align:center;
+}
+
+/* =========================
+   HEADING
+========================= */
+.heading{
+    margin-bottom:22px;
+}
+
+.heading h1{
+    font-size:clamp(2.1rem,7vw,3.2rem);
+    line-height:.95;
+    font-weight:900;
+    color:#111111;
+    letter-spacing:-1px;
+}
+
+/* =========================
+   VIDEO CARD
+========================= */
+.video-card{
+    width:min(82vw,300px);
+    aspect-ratio:1/1;
+    margin:0 auto 22px;
+    border-radius:28px;
+    overflow:hidden;
+    background:#fff;
+    box-shadow:
+        0 12px 35px rgba(0,0,0,.12),
+        0 4px 12px rgba(0,0,0,.06);
+    animation:floating 4s ease-in-out infinite;
+}
+
+@keyframes floating{
+    0%,100%{
+        transform:translateY(0px);
+    }
+    50%{
+        transform:translateY(-10px);
+    }
+}
+
+.video-card video{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+
+/* =========================
+   MESSAGE
+========================= */
+.message{
+    color:#4A4A4A;
+    font-size:15px;
+    line-height:1.6;
+    font-weight:700;
+    letter-spacing:.3px;
+    margin-bottom:26px;
+    padding:0 10px;
+}
+
+/* =========================
+   BUTTON
+========================= */
+.retry-btn{
+    position:relative;
+    overflow:hidden;
+    border:none;
+    outline:none;
+    cursor:pointer;
+
+    min-width:180px;
+    min-height:58px;
+
+    padding:16px 34px;
+
+    border-radius:18px;
+
+    font-size:17px;
+    font-weight:800;
+    letter-spacing:.8px;
+    color:#fff;
+
+    background:linear-gradient(
+        135deg,
+        #ff4db8,
+        #a855f7,
+        #ff3b5f
+    );
+
+    box-shadow:
+        0 10px 25px rgba(255,62,146,.35),
+        0 0 22px rgba(168,85,247,.25);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+}
+
+.retry-btn::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-120%;
+    width:80%;
+    height:100%;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.45),
+        transparent
+    );
+}
+
+.retry-btn:hover::before{
+    animation:shine 1s ease;
+}
+
+@keyframes shine{
+    from{
+        left:-120%;
+    }
+    to{
+        left:140%;
+    }
+}
+
+.retry-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:
+        0 14px 30px rgba(255,62,146,.45),
+        0 0 30px rgba(168,85,247,.35);
+}
+
+.retry-btn:active{
+    transform:scale(.97);
+}
+
+/* =========================
+   SHAKE ANIMATION
+========================= */
+.shake{
+    animation:shake .55s ease;
+}
+
+@keyframes shake{
+    0%{transform:translateX(0);}
+    15%{transform:translateX(-8px);}
+    30%{transform:translateX(8px);}
+    45%{transform:translateX(-7px);}
+    60%{transform:translateX(7px);}
+    75%{transform:translateX(-5px);}
+    90%{transform:translateX(5px);}
+    100%{transform:translateX(0);}
+}
+
+/* =========================
+   MOBILE OPTIMIZATION
+========================= */
+@media (max-width:360px){
+
+    .heading h1{
+        font-size:2rem;
+    }
+
+    .message{
+        font-size:14px;
+    }
+
+    .retry-btn{
+        width:100%;
+        max-width:240px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Background Particles -->
+<div class="particles">
+    <span class="particle"></span>
+    <span class="particle"></span>
+    <span class="particle"></span>
+    <span class="particle"></span>
+    <span class="particle"></span>
+    <span class="particle"></span>
+</div>
+
+<!-- Main Content -->
+<main>
+    <div class="content">
+
+        <!-- Heading -->
+        <div class="heading">
+            <h1>
+                NO INTERNET<br>
+                CONNECTION
+            </h1>
+        </div>
+
+        <!-- Video -->
+        <div class="video-card">
+            <video autoplay muted loop playsinline>
+                <source src="nointernet.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <!-- Message -->
+        <div class="message">
+            PLS CHECK YOUR INTERNET CONNECTION AND RETRY
+        </div>
+
+        <!-- Retry Button -->
+        <button class="retry-btn" id="retryBtn">
+            RETRY
+        </button>
+
+    </div>
+</main>
+
+<script>
+/* =========================
+   RETRY BUTTON SHAKE
+========================= */
+const retryBtn = document.getElementById("retryBtn");
+
+retryBtn.addEventListener("click", () => {
+
+    retryBtn.classList.remove("shake");
+
+    void retryBtn.offsetWidth;
+
+    retryBtn.classList.add("shake");
+
+    setTimeout(() => {
+        retryBtn.classList.remove("shake");
+    }, 600);
+
+});
+</script>
+
+</body>
+</html>
