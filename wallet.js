@@ -387,7 +387,7 @@ async function loadMyBonuses(uid) {
       bonusType: 'welcome_diamond'
     });
 
-    // Prime Viral Bonus
+// Prime Viral Bonus
     bonuses.push({
       title: '🚀 Prime Viral Bonus',
       desc: 'Refer 3 friends → 500 followers',
@@ -395,6 +395,16 @@ async function loadMyBonuses(uid) {
       claimable: false
     });
 
+    // Day 3 Referral Bonus — only shown if user entered a refer code
+    if (data.referredBy) {
+      bonuses.push({
+        title: '🎁 50 Free Followers (Referral)',
+        desc: 'One-time bonus for entering a referral code',
+        claimed: data.day3BonusClaimed,
+        claimable: !data.day3BonusClaimed,
+        bonusType: 'day3_referral_50'
+      });
+    }
     // Shark diamond
     if (data.level >= 3) {
       bonuses.push({

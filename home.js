@@ -4,24 +4,10 @@
 
 // ── 1. Imports ────────────────────────────────────────────────────────────────
 
-import { getUserProfile, getDailyAdsCount, logTransaction } from "./firebase.js";
+import { getUserProfile, getDailyAdsCount } from "./firebase.js";
 import { renderCheckin } from "./dailycheckin.js";
 
 // ── 2. Utility Functions ──────────────────────────────────────────────────────
-
-/**
- * Bumps the credits display with a brief CSS animation.
- * @param {number} credits
- */
-function updateCreditsDisplay(credits) {
-  const el = document.getElementById("credit-count");
-  const container = document.getElementById("floating-credits");
-  if (!el || !container) return;
-
-  el.textContent = credits;
-  container.classList.add("credit-bump");
-  setTimeout(() => container.classList.remove("credit-bump"), 400);
-}
 
 /**
  * Returns today's ad count from a profile object without an extra Firestore read.
