@@ -308,11 +308,18 @@ function initQRModal() {
   });
 
   document.getElementById("btn-copy-link").addEventListener("click", () => {
-    navigator.clipboard.writeText(SITE_URL).then(() => {
+    if (window.Android?.copyToClipboard) {
+      Android.copyToClipboard(SITE_URL);
       const btn = document.getElementById("btn-copy-link");
       btn.innerHTML = '<i class="fas fa-check"></i>';
       setTimeout(() => { btn.innerHTML = '<i class="fas fa-copy"></i>'; }, 2000);
-    });
+    } else {
+      navigator.clipboard.writeText(SITE_URL).then(() => {
+        const btn = document.getElementById("btn-copy-link");
+        btn.innerHTML = '<i class="fas fa-check"></i>';
+        setTimeout(() => { btn.innerHTML = '<i class="fas fa-copy"></i>'; }, 2000);
+      });
+    }
   });
 }
 
@@ -1285,7 +1292,11 @@ document.getElementById('btn-ig-disconnect')?.addEventListener('click', () => {
 document.getElementById('btn-ig-copy-link')?.addEventListener('click', () => {
   const link = document.getElementById('ig-profile-link-display')?.value;
   if (link) {
+   if (window.Android?.copyToClipboard) {
+    Android.copyToClipboard(link);
+  } else {
     navigator.clipboard.writeText(link).then(() => showToast("Link copied!", "success"));
+  }
   }
 });
 
