@@ -102,6 +102,9 @@
       <button id="view-refil-btn" class="action-btn refresh-btn" style="background:linear-gradient(135deg,#ff0080,#ff4466);color:white;border:none;">
         <i class="fas fa-rotate-right"></i> Refil Requests
       </button>
+      <button id="view-users-btn" class="action-btn refresh-btn" style="background:linear-gradient(135deg,#2563eb,#3b82f6);color:white;border:none;">
+        <i class="fas fa-users"></i> MY USERS
+      </button>
     </div>
 
     <!-- COUPONS VIEW -->
@@ -186,7 +189,7 @@
 
   </div>
 
-    <!-- REFIL REQUESTS VIEW -->
+ <!-- REFIL REQUESTS VIEW -->
     <div id="refil-view" style="display:none;">
       <div class="action-bar" style="padding-top:0;">
         <button id="refil-refresh" class="action-btn refresh-btn">
@@ -203,6 +206,83 @@
           <p>No refil requests found</p>
         </div>
         <div id="refil-list"></div>
+      </div>
+    </div>
+
+    <!-- MY USERS VIEW -->
+    <div id="users-view" style="display:none;">
+      <div class="action-bar" style="padding-top:0;">
+        <button class="action-btn refresh-btn level-select-btn" data-level="0" style="width:100%;background:linear-gradient(135deg,#1a1a2e,#334155);color:white;border:none;">
+          <i class="fas fa-globe"></i> ALL USERS
+        </button>
+      </div>
+      <div class="action-bar" style="padding-top:0; flex-wrap:wrap;">
+        <button class="action-btn refresh-btn level-select-btn" data-level="1" style="flex-direction:column;gap:6px;">
+          <img src="../icons/plant.png" style="width:30px;height:30px;"><span>Starter</span>
+        </button>
+        <button class="action-btn refresh-btn level-select-btn" data-level="2" style="flex-direction:column;gap:6px;">
+          <img src="../icons/lion.png" style="width:30px;height:30px;"><span>Lion</span>
+        </button>
+        <button class="action-btn refresh-btn level-select-btn" data-level="3" style="flex-direction:column;gap:6px;">
+          <img src="../icons/shark.png" style="width:30px;height:30px;"><span>Shark</span>
+        </button>
+        <button class="action-btn refresh-btn level-select-btn" data-level="4" style="flex-direction:column;gap:6px;">
+          <img src="../icons/diamond.png" style="width:30px;height:30px;"><span>Elite</span>
+        </button>
+        <button class="action-btn refresh-btn level-select-btn" data-level="5" style="flex-direction:column;gap:6px;">
+          <img src="../icons/member.png" style="width:30px;height:30px;"><span>Member</span>
+        </button>
+      </div>
+
+      <div class="stats-row" id="users-summary-row" style="display:none;">
+        <div class="stat-card stat-total">
+          <i class="fas fa-users"></i>
+          <div class="stat-info">
+            <span class="stat-number" id="users-total-count">0</span>
+            <span class="stat-label">Total Accounts</span>
+          </div>
+        </div>
+        <div class="stat-card stat-active">
+          <i class="fas fa-user-plus"></i>
+          <div class="stat-info">
+            <span class="stat-number" id="users-new-today">0</span>
+            <span class="stat-label">New Today</span>
+          </div>
+        </div>
+        <div class="stat-card stat-expired">
+          <i class="fas fa-play-circle"></i>
+          <div class="stat-info">
+            <span class="stat-number" id="users-ads-today">0</span>
+            <span class="stat-label">Ads Watched Today (in-app)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="coupons-container">
+        <div class="loading-state" id="users-loading" style="display:none;">
+          <i class="fas fa-spinner fa-spin"></i>
+          <p>Loading users...</p>
+        </div>
+        <div class="empty-state" id="users-empty" style="display:none;">
+          <i class="fas fa-user-slash"></i>
+          <p>No users found for this level</p>
+        </div>
+        <div style="overflow-x:auto;">
+          <table id="users-table" style="display:none;width:100%;border-collapse:collapse;font-size:13px;color:var(--text-primary);">
+            <thead>
+              <tr style="background:var(--bg-card);text-align:left;">
+                <th style="padding:10px 8px;border-bottom:1px solid var(--border);">#</th>
+                <th style="padding:10px 8px;border-bottom:1px solid var(--border);">Username</th>
+                <th style="padding:10px 8px;border-bottom:1px solid var(--border);">Gmail</th>
+                <th style="padding:10px 8px;border-bottom:1px solid var(--border);">Monthly Spend (₹)</th>
+                <th style="padding:10px 8px;border-bottom:1px solid var(--border);">Credits</th>
+                <th style="padding:10px 8px;border-bottom:1px solid var(--border);">Diamonds</th>
+                <th style="padding:10px 8px;border-bottom:1px solid var(--border);">Referred</th>
+              </tr>
+            </thead>
+            <tbody id="users-table-body"></tbody>
+          </table>
+        </div>
       </div>
     </div>
 

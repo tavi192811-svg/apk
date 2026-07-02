@@ -144,39 +144,42 @@ onAuthStateChanged(auth, async (user) => {
 // VIEW SWITCHING (Coupons / Orders)
 // ══════════════════════════════════════════════════
 
-document.getElementById('view-coupons-btn')?.addEventListener('click', () => {
-  document.getElementById('coupons-view').style.display = 'block';
+function hideAllAdminViews() {
+  document.getElementById('coupons-view').style.display = 'none';
   document.getElementById('orders-view').style.display = 'none';
   document.getElementById('support-view').style.display = 'none';
   document.getElementById('refil-view').style.display = 'none';
+  document.getElementById('users-view').style.display = 'none';
+  document.getElementById('stats-row').style.display = 'none';
+}
+
+document.getElementById('view-coupons-btn')?.addEventListener('click', () => {
+  hideAllAdminViews();
+  document.getElementById('coupons-view').style.display = 'block';
   document.getElementById('stats-row').style.display = 'grid';
 });
 
 document.getElementById('view-orders-btn')?.addEventListener('click', () => {
-  document.getElementById('coupons-view').style.display = 'none';
+  hideAllAdminViews();
   document.getElementById('orders-view').style.display = 'block';
-  document.getElementById('support-view').style.display = 'none';
-  document.getElementById('refil-view').style.display = 'none';
-  document.getElementById('stats-row').style.display = 'none';
   loadOrders(currentOrderTab);
 });
 
 document.getElementById('view-support-btn')?.addEventListener('click', () => {
-  document.getElementById('coupons-view').style.display = 'none';
-  document.getElementById('orders-view').style.display = 'none';
+  hideAllAdminViews();
   document.getElementById('support-view').style.display = 'block';
-  document.getElementById('refil-view').style.display = 'none';
-  document.getElementById('stats-row').style.display = 'none';
   loadSupportMessages(currentSupportTab);
 });
 
 document.getElementById('view-refil-btn')?.addEventListener('click', () => {
-  document.getElementById('coupons-view').style.display = 'none';
-  document.getElementById('orders-view').style.display = 'none';
-  document.getElementById('support-view').style.display = 'none';
+  hideAllAdminViews();
   document.getElementById('refil-view').style.display = 'block';
-  document.getElementById('stats-row').style.display = 'none';
   loadRefilRequests();
+});
+
+document.getElementById('view-users-btn')?.addEventListener('click', () => {
+  hideAllAdminViews();
+  document.getElementById('users-view').style.display = 'block';
 });
 
 document.getElementById('refil-refresh')?.addEventListener('click', loadRefilRequests);
@@ -949,5 +952,112 @@ document.getElementById('btn-refresh')?.addEventListener('click', async () => {
   btn.innerHTML = '<i class="fas fa-sync-alt"></i> Refresh';
   showToast('Refreshed', 'info');
 });
+
+// ══════════════════════════════════════════════════
+// MY USERS — Level Breakdown
+// Client-side Firestore reads only — does NOT touch Railway/server.js,
+// so it costs zero Railway tokens. Uses Firestore doc reads instead
+// (free up to 50k/day; "ALL USERS" scans the whole collection, see chat).
+// ══════════════════════════════════════════════════
+
+document.querySelectorAll('.level-select-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.level-select-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const level = parseInt(btn.dataset.level, 10);
+    if (level === 0) {
+      loadAllUsersSummary();
+    } else {
+      loadUsersByLevel(level);
+    }
+  });
+});
+
+async function loadUsersByLevel(level) {
+  const loading = document.getElementById('users-loading');
+  const empty = document.getElementById('users-empty');
+  const table = document.getElementById('users-table');
+  const tbody = document.getElementById('users-table-body');
+  const summaryRow = document.getElementById('users-summary-row');
+
+  summaryRow.style.display = 'none';
+  table.style.display = 'none';
+  empty.style.display = 'none';
+  loading.style.display = 'block';
+  tbody.innerHTML = '';
+
+  try {
+    const q = query(collection(db, 'users'), where('level', '==', level));
+    const snap = await getDocs(q);
+    loading.style.display = 'none';
+
+    if (snap.empty) {
+      empty.style.display = 'block';
+      return;
+    }
+
+    let rows = '';
+    let i = 1;
+    snap.forEach(d => {
+      const u = d.data();
+      rows += `
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:10px 8px;">${i++}</td>
+          <td style="padding:10px 8px;">${u.username || '—'}</td>
+          <td style="padding:10px 8px;font-size:12px;word-break:break-all;">${u.email || '—'}</td>
+          <td style="padding:10px 8px;">₹${u.monthly_spending || 0}</td>
+          <td style="padding:10px 8px;">${u.credits || 0}</td>
+          <td style="padding:10px 8px;">${u.diamonds || 0}</td>
+          <td style="padding:10px 8px;">${u.referralCount || 0}</td>
+        </tr>`;
+    });
+
+    tbody.innerHTML = rows;
+    table.style.display = 'table';
+  } catch (err) {
+    console.error('loadUsersByLevel error:', err);
+    loading.style.display = 'none';
+    showToast('Failed to load users', 'error');
+  }
+}
+
+async function loadAllUsersSummary() {
+  const loading = document.getElementById('users-loading');
+  const empty = document.getElementById('users-empty');
+  const table = document.getElementById('users-table');
+  const summaryRow = document.getElementById('users-summary-row');
+
+  table.style.display = 'none';
+  empty.style.display = 'none';
+  loading.style.display = 'block';
+  summaryRow.style.display = 'none';
+
+  try {
+    const snap = await getDocs(collection(db, 'users'));
+    loading.style.display = 'none';
+
+    const todayStr = new Date().toISOString().split('T')[0];
+    let newToday = 0;
+    let adsToday = 0;
+
+    snap.forEach(d => {
+      const u = d.data();
+      const createdStr = u.created_at?.toDate?.()?.toISOString().split('T')[0];
+      if (createdStr === todayStr) newToday++;
+
+      const adsDateStr = u.daily_ads_date?.toDate?.()?.toISOString().split('T')[0];
+      if (adsDateStr === todayStr) adsToday += (u.daily_ads_watched || 0);
+    });
+
+    document.getElementById('users-total-count').textContent = snap.size;
+    document.getElementById('users-new-today').textContent = newToday;
+    document.getElementById('users-ads-today').textContent = adsToday;
+    summaryRow.style.display = 'grid';
+  } catch (err) {
+    console.error('loadAllUsersSummary error:', err);
+    loading.style.display = 'none';
+    showToast('Failed to load users summary', 'error');
+  }
+}
 
 console.log("✅ Admin Dashboard loaded.");
