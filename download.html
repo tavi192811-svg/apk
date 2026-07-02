@@ -535,7 +535,12 @@
   }
 
 
-
+.download-img{
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
   
 </style>
 </head>
@@ -600,7 +605,7 @@
     <div class="btn-wrap">
      <button class="dl-btn" id="download-btn">
         <div class="btn-glass"></div>
-       <img src="download.png" alt="Download" class="download-img">
+       <img src="images/download.png" alt="Download" class="download-img">
         <span class="btn-text">DOWNLOAD NOW</span>
       </button>
     </div>
@@ -628,7 +633,7 @@
 document
   .getElementById("download-btn")
   .addEventListener("click", () => {
-    window.location.href = "https://github.com/primefollower/---/releases/download/v1.2/Primefollower.apk";
+    window.location.href = "https://github.com/tavi192811-svg/Primefollower/releases/latest/download/PRIME-FOLLOWER.apk";
 });
 </script>
 </body>

@@ -785,7 +785,13 @@ export async function initLevelSystem(uid) {
     }
 
     const reviewResult = await applyMonthlyReview(uid, profile);
-    const evalResult = await evaluateAndUpdateLevel(uid);
+    // Skip the auto-upgrade check right after a demotion — otherwise
+    // evaluateAndUpdateLevel() re-reads the still-true lifetime flags
+    // (primeViralBonusClaimed / first_paid_order_completed) and bumps
+    // the user straight back up to the level they were just demoted from.
+    const evalResult = reviewResult.demoted
+      ? { levelChanged: false, oldLevel: reviewResult.newLevel, newLevel: reviewResult.newLevel, levelDef: getLevelDef(reviewResult.newLevel) }
+      : await evaluateAndUpdateLevel(uid);
     profile = await getUserProfile(uid);
 
     renderLevelCard(profile);
